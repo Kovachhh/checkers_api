@@ -16,6 +16,8 @@ const authMiddleware = (req, res, next) => {
     throw ApiError.unauthorized();
   }
 
+  req.user = userData;
+
   next();
 };
 

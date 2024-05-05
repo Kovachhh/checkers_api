@@ -15,9 +15,9 @@ const create = async ({ email, username, password }) => {
   return user.toObject();
 }
 
-const normalize = ({ id, email, username }) => {
+const normalize = ({ _id, email, username }) => {
   return {
-    id,
+    userId: _id,
     email,
     username,
   };

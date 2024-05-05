@@ -1,4 +1,5 @@
-const { ERRORS } = require('../const/errors');
+const { RESPONSES } = require('../const/response.const');
+const { ApiError } = require('../exceptions/api.error');
 const { UsersService } = require('../services/users.service');
 
 const getUsers = async (req, res) => {
@@ -16,9 +17,7 @@ const getUserById = async (req, res) => {
   const user = await UsersService.findOne({_id: id});
 
   if (!user) {
-    res.status(404);
-
-    res.send(ERRORS.USER_NOT_FOUND);
+    ApiError.notFound(RESPONSES.USER_NOT_FOUND);
   }
 
   res.status(200);

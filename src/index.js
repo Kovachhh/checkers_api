@@ -7,6 +7,7 @@ require('dotenv').config();
 
 const { usersRouter } = require('./routes/users.router');
 const { authRouter } = require('./routes/auth.router');
+const { gamesRouter } = require('./routes/games.router.js');
 const { errorMiddleware } = require('./middlewares/error.middleware');
 const MongoDB = require('./utils/mongodb.js');
 
@@ -17,9 +18,9 @@ app.use(cookieParser());
 
 MongoDB.connect();
 
-app.use('/users', usersRouter);
-
 app.use('/', authRouter);
+app.use('/users', usersRouter);
+app.use('/games', gamesRouter);
 
 app.use(errorMiddleware);
 

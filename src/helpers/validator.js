@@ -5,7 +5,7 @@ const {
   EMAIL_REQUIRED,
   PASSWORD_REQUIRED,
   NAME_REQUIRED,
-} = require('../const/errors');
+} = require('../const/response.const');
 
 const validateEmail = (value) => {
   if (!value) {

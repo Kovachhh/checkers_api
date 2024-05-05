@@ -1,4 +1,4 @@
-const { ERRORS } = require('../const/errors');
+const { RESPONSES } = require('../const/response.const');
 const { UsersService } = require('../services/users.service');
 const { JwtService } = require('../services/jwt.service');
 const { ValidatorHelper } = require('../helpers/validator');
@@ -30,26 +30,29 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email) {
-    throw ApiError.badRequest(ERRORS.EMAIL_REQUIRED);
+    throw ApiError.badRequest(RESPONSES.EMAIL_REQUIRED);
   }
 
   if (!password) {
-    throw ApiError.badRequest(ERRORS.PASSWORD_REQUIRED);
+    throw ApiError.badRequest(RESPONSES.PASSWORD_REQUIRED);
   }
 
   const user = await UsersService.findOne({ email });
 
   if (!user) {
-    throw ApiError.badRequest(ERRORS.INCORRECT_EMAIL_PASSWORD);
+    throw ApiError.badRequest(RESPONSES.INCORRECT_EMAIL_PASSWORD);
   }
 
   const isPasswordValid = await bcryptHelper.compare(password, user.password);
 
   if (!isPasswordValid) {
-    throw ApiError.badRequest(ERRORS.INCORRECT_EMAIL_PASSWORD);
+    throw ApiError.badRequest(RESPONSES.INCORRECT_EMAIL_PASSWORD);
   }
 
   const normalizedUser = UsersService.normalize(user);
+
+  console.log('norm:')
+  console.log(normalizedUser);
 
   const accessToken = JwtService.sign(normalizedUser);
 
