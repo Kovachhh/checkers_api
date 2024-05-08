@@ -51,9 +51,6 @@ const login = async (req, res) => {
 
   const normalizedUser = UsersService.normalize(user);
 
-  console.log('norm:')
-  console.log(normalizedUser);
-
   const accessToken = JwtService.sign(normalizedUser);
 
   res.send({

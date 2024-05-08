@@ -9,7 +9,6 @@ const findOne = async (query) => {
 };
 
 const create = async ({ name, userId }) => {
-    console.log(name);
   const game = new Game({ name: name, firstPlayerId: userId, activePlayerId: userId });
   await game.save();
 

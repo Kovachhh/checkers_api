@@ -12,9 +12,9 @@ const getUsers = async (req, res) => {
 };
 
 const getUserById = async (req, res) => {
-  const { id } = req.params;
+  const { userId } = req.params;
 
-  const user = await UsersService.findOne({_id: id});
+  const user = await UsersService.findOne({_id: userId});
 
   if (!user) {
     ApiError.notFound(RESPONSES.USER_NOT_FOUND);

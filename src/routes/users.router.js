@@ -8,4 +8,6 @@ const usersRouter = express.Router();
 
 usersRouter.get('/', authMiddleware, catchError(UsersController.getUsers));
 
+usersRouter.get('/:userId', authMiddleware, catchError(UsersController.getUserById));
+
 module.exports = { usersRouter };
