@@ -24,9 +24,19 @@ const getUserById = async (req, res) => {
   res.send(UsersService.normalize(user));
 };
 
+const getLeaderboard = async (req, res) => {
+  const users = await UsersService.getBestUsers();
+
+  const normalizedUsers = users.map((user) => UsersService.normalize(user));
+
+  res.status(200);
+  res.send(normalizedUsers);
+};
+
 module.exports = {
   UsersController: {
     getUsers,
     getUserById,
+    getLeaderboard,
   },
 };

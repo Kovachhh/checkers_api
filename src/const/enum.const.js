@@ -14,4 +14,14 @@ module.exports = {
         first: 'first',
         second: 'second',
     },
+
+    GAME_ACTIONS: {
+        CONNECTION: 'connection',
+        CREATED: 'game-created',
+        ACCEPTED: 'game-accepted',
+        FINISHED: 'game-finished',
+        MOVED: 'game-moved',
+        LOST: 'game-lost',
+        WON: 'game-won',
+    },
 }

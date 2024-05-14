@@ -1,7 +1,7 @@
 const Game = require("../models/game.model");
 
-const findAll = async () => {
-  return await Game.find().lean();
+const findAll = async (query) => {
+  return await Game.find(query).lean();
 };
 
 const findOne = async (query) => {

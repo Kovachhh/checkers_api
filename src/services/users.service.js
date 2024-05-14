@@ -15,11 +15,28 @@ const create = async ({ email, username, password }) => {
   return user.toObject();
 }
 
-const normalize = ({ _id, email, username }) => {
+const getBestUsers = async () => {
+  return await User
+      .aggregate()
+      .project({
+          "_id": "$_id",
+          "username": "$username",
+          "createdAt": "$createdAt",
+          "victories": "$victories",
+          "losses": "$losses",
+      })
+      .limit(10);
+}
+
+const normalize = ({ _id, email, username, victories, losses, createdAt, updatedAt }) => {
   return {
     userId: _id,
     email,
     username,
+    victories,
+    losses,
+    createdAt,
+    updatedAt
   };
 };
 
@@ -29,5 +46,6 @@ module.exports = {
     findOne,
     create,
     normalize,
+    getBestUsers,
   },
 };
