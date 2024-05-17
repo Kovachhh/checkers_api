@@ -9,7 +9,7 @@ const register = async (req, res) => {
   const { username, email, password } = req.body;
 
   const errors = {
-    username: ValidatorHelper.validateName(username),
+    username: ValidatorHelper.validateUsername(username),
     email: ValidatorHelper.validateEmail(email),
     password: ValidatorHelper.validatePassword(password),
   };
@@ -19,6 +19,12 @@ const register = async (req, res) => {
   }
 
   const hashedPassword = await bcryptHelper.createHash(password);
+
+  const user = await UsersService.findOne({ email });
+
+  if (user) {
+    throw ApiError.badRequest(RESPONSES.EMAIL_EXIST);
+  }
 
   const newUser = await UsersService.create({email, password: hashedPassword, username});
 

@@ -86,7 +86,7 @@ const acceptGame = async (req, res) => {
 
     await GamesService.update(gameId, { secondPlayerId: userId, state: GAME_STATES.in_progress });
 
-    const data = await GamesService.findOne({ _id: new Types.ObjectId(gameId) });
+    const data = await GamesService.getGame({ _id: new Types.ObjectId(gameId) });
 
     await WebsocketsService.sendMessageToAll({ event: GAME_ACTIONS.ACCEPTED, data });
 
@@ -162,7 +162,7 @@ const move = async (req, res) => {
     }
 
     if ((target.y === 0 && userId === String(game.firstPlayerId)) || (target.y === 7 && userId === String(game.secondPlayerId))) {
-        game = await GamesService.update(gameId, { board: board.map(element => element.id === id ? { ...element, type: CHECKER_TYPE.king }: element )});
+        game = await GamesService.update(gameId, { board: board.map(element => element.id === id ? { ...element, x: target.x, y: target.y, type: CHECKER_TYPE.king }: element )});
     }
 
     const players = uniqBy(game.board, 'player');
