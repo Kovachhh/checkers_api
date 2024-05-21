@@ -7,10 +7,6 @@ const createHash = (password) => {
 const compare = async (password, hashedPassword) => {
   const isValid = await bcrypt.compare(password, hashedPassword);
 
-  if (!isValid) {
-    return 'Wrong password';
-  }
-
   return isValid;
 };
 
