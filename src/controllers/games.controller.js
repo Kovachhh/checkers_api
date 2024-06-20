@@ -167,7 +167,7 @@ const move = async (req, res) => {
 
     const players = uniqBy(game.board, 'player');
 
-    if (players.length == 1) {
+    if (players.length === 1) {
         await GamesService.update(gameId, { state: GAME_STATES.finished });
         await WebsocketsService.sendMessageToAll({ event: GAME_ACTIONS.FINISHED, data: { _id: gameId } });
 

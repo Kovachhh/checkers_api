@@ -28,6 +28,10 @@ const getBestUsers = async () => {
       .limit(10);
 }
 
+const update = async (id, data) => {
+  return User.findOneAndUpdate({ _id: id }, data, { new: true }).lean();
+}
+
 const normalize = ({ _id, email, username, victories, losses, createdAt, updatedAt }) => {
   return {
     userId: _id,
@@ -45,6 +49,7 @@ module.exports = {
     findAll,
     findOne,
     create,
+    update,
     normalize,
     getBestUsers,
   },
