@@ -1,9 +1,9 @@
-const { RESPONSES } = require('../const/response.const');
-const { UsersService } = require('../services/users.service');
-const { JwtService } = require('../services/jwt.service');
-const { ValidatorHelper } = require('../helpers/validator');
-const { ApiError } = require('../exceptions/api.error');
-const { bcryptHelper } = require('../helpers/bcrypt');
+const { RESPONSES } = require("../const/response.const");
+const { UsersService } = require("../services/users.service");
+const { JwtService } = require("../services/jwt.service");
+const { ValidatorHelper } = require("../helpers/validator");
+const { ApiError } = require("../exceptions/api.error");
+const { bcryptHelper } = require("../helpers/bcrypt");
 
 const register = async (req, res) => {
   const { username, email, password } = req.body;
@@ -15,7 +15,7 @@ const register = async (req, res) => {
   };
 
   if (errors.email || errors.password || errors.name) {
-    throw ApiError.badRequest('Bad request', errors);
+    throw ApiError.badRequest("Bad request", errors);
   }
 
   const hashedPassword = await bcryptHelper.createHash(password);
@@ -26,7 +26,11 @@ const register = async (req, res) => {
     throw ApiError.badRequest(RESPONSES.EMAIL_EXIST);
   }
 
-  const newUser = await UsersService.create({email, password: hashedPassword, username});
+  const newUser = await UsersService.create({
+    email,
+    password: hashedPassword,
+    username,
+  });
 
   res.status(201);
   res.send(UsersService.normalize(newUser));
