@@ -146,6 +146,34 @@ const checkPathClear = (board, from, to) => {
   return true;
 };
 
+const findJumpPath = (board, from, to) => {
+  const dx = to.x > from.x ? 1 : to.x < from.x ? -1 : 0;
+  const dy = to.y > from.y ? 1 : to.y < from.y ? -1 : 0;
+  const distance = Math.abs(to.x - from.x);
+  const killedCheckers = [];
+
+  // Find the checker at the starting position to get the player
+  const startChecker = findCheckerByXY(board, from.x, from.y);
+  if (!startChecker) {
+    return { killedCheckers: [] };
+  }
+
+  const player = startChecker.player;
+
+  // Check each cell along the path
+  for (let i = 1; i < distance; i++) {
+    const checkX = from.x + dx * i;
+    const checkY = from.y + dy * i;
+    const cellContent = findCheckerByXY(board, checkX, checkY);
+
+    if (cellContent && cellContent.player !== player) {
+      killedCheckers.push({ x: checkX, y: checkY });
+    }
+  }
+
+  return { killedCheckers };
+};
+
 const findPossibleMoves = (
   board,
   checker,
